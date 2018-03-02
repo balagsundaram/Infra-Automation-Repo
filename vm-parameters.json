@@ -46,7 +46,7 @@
                                           "value":  "lbgARMdemo-Frontend"
                                       },
                        "publicIpAddressName-Frontend":  {
-                                                   "value":  "fridaydemo-Frontend"
+                                                   "value":  "finalprepdemo-Frontend"
                                                },
                         "networkInterfaceName-Backend":  {
                             "value":  "lbgARMdemoNIC-Backend"
