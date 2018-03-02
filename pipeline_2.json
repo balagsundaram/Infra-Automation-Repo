@@ -92,7 +92,7 @@
         {
           "type": "Microsoft.Compute/images",
           "apiVersion": "2016-04-30-preview",
-          "name": "[parameters('imageName')]",
+          "name": "[parameters('vmCustomImageName')]",
           "location": "[resourceGroup().location]",
           "properties": {
             "storageProfile": {
@@ -112,7 +112,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Frontend'))]",
-                "[parameters('imageName')]"
+                "[parameters('vmCustomImageName')]"
             ],
             "properties": {
                 "osProfile": {
@@ -125,7 +125,7 @@
                 },
                 "storageProfile": {
                   "imageReference": {
-                    "id": "[resourceId('Microsoft.Compute/images', parameters('imageName'))]"
+                    "id": "[resourceId('Microsoft.Compute/images', parameters('vmCustomImageName'))]"
                   }
                 },
                 "hardwareProfile": {
@@ -147,7 +147,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Backend'))]",
-                "[parameters('imageName')]"
+                "[parameters('vmCustomImageName')]"
             ],
             "properties": {
                 "osProfile": {
@@ -163,7 +163,7 @@
                 },
                "storageProfile": {
                   "imageReference": {
-                    "id": "[resourceId('Microsoft.Compute/images', parameters('imageName'))]"
+                    "id": "[resourceId('Microsoft.Compute/images', parameters('vmCustomImageName'))]"
                   }
                 },
                 "networkProfile": {
