@@ -1,0 +1,36 @@
+﻿{
+    "$schema":  "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "location":  {
+                                        "value":  "eastus"
+                                    },
+                       "virtualNetworkName":  {
+                                                  "value":  "lbgARMdemoVNet"
+                                              },
+                       "networkInterfaceName-Frontend":  {
+                                                     "value":  "lbgARMdemoNIC-Frontend"
+                                                 },
+                       "networkInterfaceName-Backend":  {
+                                                     "value":  "lbgARMdemoNIC-Backend"
+                                                 },
+                       "networkSecurityGroupName-Frontend":  {
+                                                        "value":  "lbgARMdemoNSG-Frontend"
+                                                    },
+                        "networkSecurityGroupName-Backend":  {
+                                                        "value":  "lbgARMdemoNSG-Backend"
+                                                },
+                       "subnetName-Frontend":  {
+                                           "value":  "lbgARMdemo-Frontend"
+                                       },
+                       "subnetName-Backend":  {
+                                           "value":  "lbgARMdemo-Backend"
+                                       },
+                       "publicIpAddressName-Frontend":  {
+                                                   "value":  "fridaydemo-Frontend"
+                                               },
+                        "publicIpAddressName-Backend":  {
+                                                "value":  "fridaydemo-Backend"
+                        }
+                   }
+}

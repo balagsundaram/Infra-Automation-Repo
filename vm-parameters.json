@@ -1,0 +1,61 @@
+﻿{
+    "$schema":  "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "location":  {
+                                        "value":  "eastus"
+                                    },
+                       "virtualMachineSize":  {
+                                                  "value":  "Standard_DS1_v2"
+                                              },
+                       "publicIpAddressType":  {
+                                                   "value":  "Dynamic"
+                                               },
+                       "publicIpAddressSku":  {
+                                                  "value":  "Basic"
+                                              },
+                       "virtualMachineName-Frontend":  {
+                                                  "value":  "lbgARMdemoVM-Ft"
+                                              },
+                        "virtualMachineName-Backend":  {
+                            "value":  "lbgARMdemoVM-Bk"
+                        },
+                       "adminUsername":  {
+                                             "value":  "lbgadmin"
+                                         },
+                       "adminPassword":  {
+                                             "value":  "Password@2017"
+                                         },
+                       "virtualNetworkName":  {
+                                                  "value":  "lbgARMdemoVNet"
+                                              },
+                       "networkInterfaceName-Frontend":  {
+                                                    "value":  "lbgARMdemoNIC-Frontend"
+                                                },
+                       "networkSecurityGroupName-Frontend":  {
+                                                        "value":  "lbgARMdemoNSG-Frontend"
+                                                    },
+                       "subnetName-Frontend":  {
+                                          "value":  "lbgARMdemo-Frontend"
+                                      },
+                       "publicIpAddressName-Frontend":  {
+                                                   "value":  "fridaydemo-Frontend"
+                                               },
+                        "networkInterfaceName-Backend":  {
+                            "value":  "lbgARMdemoNIC-Backend"
+                        },
+                       "networkSecurityGroupName-Backend":  {
+                                                        "value":  "lbgARMdemoNSG-Backend"
+                                                    },
+                       "subnetName-Backend":  {
+                                          "value":  "lbgARMdemo-Backend"
+                                      },
+                       "publicIpAddressName-Backend":  {
+                                                   "value":  "fridaydemo-Backend"
+                                               },
+
+                       "resGroupName":  {
+                                            "value":  "fridaydemo"
+                                        }
+                   }
+}
