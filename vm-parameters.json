@@ -58,7 +58,7 @@
                                           "value":  "lbgARMdemo-Backend"
                                       },
                        "publicIpAddressName-Backend":  {
-                                                   "value":  "fridaydemo-Backend"
+                                                   "value":  "finalprepdemo-Backend"
                                                },
 
                        "resGroupName":  {

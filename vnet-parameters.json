@@ -27,10 +27,10 @@
                                            "value":  "lbgARMdemo-Backend"
                                        },
                        "publicIpAddressName-Frontend":  {
-                                                   "value":  "fridaydemo-Frontend"
+                                                   "value":  "finalprepdemo-Frontend"
                                                },
                         "publicIpAddressName-Backend":  {
-                                                "value":  "fridaydemo-Backend"
+                                                "value":  "finalprepdemo-Backend"
                         },
 
                        "resGroupName":  {
