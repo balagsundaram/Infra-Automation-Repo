@@ -30,7 +30,7 @@
                                                   "value":  "lbgARMdemoVNet"
                                               },
                         "osDiskVhdUri": {
-                                    "value": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/images/wiprobasehardVM-image-20180302110442"
+                                    "value": "https://lbgcheflabdiag682.blob.core.windows.net/bootdiagnostics-wiprobase-6ceae0ed-ea69-4885-9960-3acd70e00298"
                                 },
                         "vmCustomImageName": {
                                     "value": "wiprobasehardVM-image-20180302110442"
