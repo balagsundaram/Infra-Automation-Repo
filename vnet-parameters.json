@@ -35,6 +35,9 @@
 
                        "resGroupName":  {
                                             "value":  "finalprepdemo"
+                                        },
+                        "deploymentName":  {
+                                            "value":  "simpledemo"
                                         }
                    }
 }
