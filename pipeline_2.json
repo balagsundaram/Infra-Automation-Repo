@@ -108,7 +108,7 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "id": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/images/wiproimg-image-20180302135527"
+                        "id": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/disks/wiproimg_OsDisk_1_7ee19517f9324451bcda759950aa7089"
                     },
                     "osDisk": {
                         "createOption": "fromImage",
@@ -151,7 +151,7 @@
                 },
                "storageProfile": {
                     "imageReference": {
-                        "id": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/images/wiproimg-image-20180302135527"
+                        "id": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/disks/wiproimg_OsDisk_1_7ee19517f9324451bcda759950aa7089"
                     },
                     "osDisk": {
                         "createOption": "fromImage",
