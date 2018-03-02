@@ -35,6 +35,9 @@
         "resGroupName": {
             "type": "string"
         },
+        "deploymentName": {
+            "type": "string"
+        },
         "storageAccountType": {
             "type": "string",
             "defaultValue": "Standard_LRS",
