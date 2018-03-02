@@ -30,7 +30,7 @@
                                                   "value":  "lbgARMdemoVNet"
                                               },
                         "osDiskVhdUri": {
-                                    "value": "https://lbgcheflabdiag682.blob.core.windows.net/bootdiagnostics-wiprobase-6ceae0ed-ea69-4885-9960-3acd70e00298"
+                                    "value": "https://md-pc3dfksksk5l.blob.core.windows.net/sgmk3htxkcsn/abcd?sv=2017-04-17&sr=b&si=c0ae5b2b-d392-4453-b358-3b5090f77f37&sig=tuNHEp2RD6jb2q8aSiWBmUkM8cvAs84L6A%2BoXX9KVBY%3D"
                                 },
                         "vmCustomImageName": {
                                     "value": "wiprobasehardVM-image-20180302110442"
