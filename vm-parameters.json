@@ -6,7 +6,7 @@
                                         "value":  "eastus"
                                     },
                        "virtualMachineSize":  {
-                                                  "value":  "Standard_DS1_v2"
+                                                  "value":  "Standard_D4s_v3"
                                               },
                        "publicIpAddressType":  {
                                                    "value":  "Dynamic"
@@ -29,6 +29,13 @@
                        "virtualNetworkName":  {
                                                   "value":  "lbgARMdemoVNet"
                                               },
+                        "osDiskVhdUri": {
+                                    "value": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/images/wiprobasehardVM-image-20180302110442"
+                                },
+                        "vmCustomImageName": {
+                                    "value": "wiprobasehardVM-image-20180302110442"
+                                },
+                        
                        "networkInterfaceName-Frontend":  {
                                                     "value":  "lbgARMdemoNIC-Frontend"
                                                 },
@@ -55,7 +62,7 @@
                                                },
 
                        "resGroupName":  {
-                                            "value":  "fridaydemo"
+                                            "value":  "finalprepdemo"
                                         }
                    }
 }

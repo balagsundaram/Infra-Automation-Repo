@@ -55,7 +55,30 @@
         },
         "publicIpAddressSku": {
             "type": "string"
-        }
+        },
+        
+        "osType": {
+          "type": "string",
+          "allowedValues": [
+            "Windows",
+            "Linux"
+          ],
+          "metadata": {
+            "description": "This is the OS that your VM will be running"
+          }
+        },
+        "osDiskVhdUri": {
+          "type": "string",
+          "metadata": {
+            "description": "Uri of the your user image"
+          }
+        },
+        "vmCustomImageName": {
+          "type": "string",
+          "metadata": {
+            "description": "This is the name of the Custom VMImage"
+          }
+    },
     },
     "variables": {
         "vnetId": "[resourceId(parameters('resGroupName'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
@@ -64,12 +87,29 @@
     },
     "resources": [
         {
+          "type": "Microsoft.Compute/images",
+          "apiVersion": "2016-04-30-preview",
+          "name": "[parameters('imageName')]",
+          "location": "[resourceGroup().location]",
+          "properties": {
+            "storageProfile": {
+              "osDisk": {
+                "osType": "[parameters('osType')]",
+                "osState": "Generalized",
+                "blobUri": "[parameters('osDiskVhdUri')]",
+                "storageAccountType": "Standard_LRS"
+              }
+            }
+          }
+        },
+        {
             "name": "[parameters('virtualMachineName-Frontend')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Frontend'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Frontend'))]",
+                "[parameters('imageName')]"
             ],
             "properties": {
                 "osProfile": {
@@ -80,24 +120,14 @@
                         "provisionVmAgent": "true"
                     }
                 },
+                "storageProfile": {
+                  "imageReference": {
+                    "id": "[resourceId('Microsoft.Compute/images', parameters('imageName'))]"
+                  }
+                },
                 "hardwareProfile": {
                     "vmSize": "[parameters('virtualMachineSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "createOption": "fromImage",
-                        "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
-                        }
-                    },
-                    "dataDisks": []
-                },
+                },                
                 "networkProfile": {
                     "networkInterfaces": [
                         {
@@ -113,7 +143,8 @@
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Backend'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Backend'))]",
+                "[parameters('imageName')]"
             ],
             "properties": {
                 "osProfile": {
@@ -127,20 +158,10 @@
                 "hardwareProfile": {
                     "vmSize": "[parameters('virtualMachineSize')]"
                 },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "createOption": "fromImage",
-                        "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
-                        }
-                    },
-                    "dataDisks": []
+               "storageProfile": {
+                  "imageReference": {
+                    "id": "[resourceId('Microsoft.Compute/images', parameters('imageName'))]"
+                  }
                 },
                 "networkProfile": {
                     "networkInterfaces": [
