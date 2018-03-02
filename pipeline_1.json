@@ -1,163 +1,109 @@
-{
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ {
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string"
-        },
-        "virtualMachineName-Frontend": {
-            "type": "string"
-        },
-        "virtualMachineName-Backend": {
-            "type": "string"
-        },
-        "virtualMachineSize": {
-            "type": "string"
-        },
-        "adminUsername": {
-            "type": "string"
-        },
         "virtualNetworkName": {
             "type": "string"
         },
         "networkInterfaceName-Frontend": {
             "type": "string"
         },
-        "networkSecurityGroupName-Frontend": {
+        "networkInterfaceName-Backend": {
             "type": "string"
         },
-        "networkInterfaceName-Backend": {
+        "networkSecurityGroupName-Frontend": {
             "type": "string"
         },
         "networkSecurityGroupName-Backend": {
             "type": "string"
         },
-        "adminPassword": {
-            "type": "securestring"
-        },       
+        "location": {
+            "type": "string"
+        },
         "subnetName-Frontend": {
+            "type": "string"
+        },
+        "subnetName-Backend": {
             "type": "string"
         },
         "publicIpAddressName-Frontend": {
             "type": "string"
-        },  
-        "subnetName-Backend": {
-            "type": "string"
         },
         "publicIpAddressName-Backend": {
             "type": "string"
-        },      
+        },
         "resGroupName": {
             "type": "string"
         },
-        "publicIpAddressType": {
-            "type": "string"
-        },
-        "publicIpAddressSku": {
-            "type": "string"
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "metadata": {
+                "description": "Storage Account type for the VM and VM diagnostic storage"
+            },
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS"
+            ]
         }
+      
     },
-    "variables": {
-        "vnetId": "[resourceId(parameters('resGroupName'),'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnet1Ref": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName-Frontend'))]",
-        "subnet2Ref": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName-Backend'))]"
+    "variables": {        
+        "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName-Frontend'))]",
+        "subnet2Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName-Backend'))]",
+        "diagStorageAccountName": "[concat('diags',uniqueString(resourceGroup().id))]"
+        
     },
     "resources": [
         {
-            "name": "[parameters('virtualMachineName-Frontend')]",
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2016-04-30-preview",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Frontend'))]"
-            ],
-            "properties": {
-                "osProfile": {
-                    "computerName": "[parameters('virtualMachineName-Frontend')]",
-                    "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]",
-                    "windowsConfiguration": {
-                        "provisionVmAgent": "true"
-                    }
-                },
-                "hardwareProfile": {
-                    "vmSize": "[parameters('virtualMachineSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "createOption": "fromImage",
-                        "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
-                        }
-                    },
-                    "dataDisks": []
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName-Frontend'))]"
-                        }
-                    ]
-                }
-            }
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('diagStorageAccountName')]",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "[parameters('storageAccountType')]"
+            },
+            "kind": "Storage",
+            "properties": {}
         },
         {
-            "name": "[parameters('virtualMachineName-Backend')]",
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2016-04-30-preview",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Backend'))]"
-            ],
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "comments": "This will build a Virtual Network.",
             "properties": {
-                "osProfile": {
-                    "computerName": "[parameters('virtualMachineName-Backend')]",
-                    "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]",
-                    "windowsConfiguration": {
-                        "provisionVmAgent": "true"
-                    }
-                },
-                "hardwareProfile": {
-                    "vmSize": "[parameters('virtualMachineSize')]"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "createOption": "fromImage",
-                        "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
-                        }
-                    },
-                    "dataDisks": []
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName-Backend'))]"
-                        }
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
                     ]
-                }
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName-Frontend')]",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetName-Backend')]",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24"
+                        }
+                    }
+                ]
             }
         },
         {
             "name": "[parameters('networkInterfaceName-Frontend')]",
             "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2016-09-01",
-            "location": "[parameters('location')]",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "comments": "This will be your Primary NIC",
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName-Frontend'))]"
+                "[parameters('publicIpAddressName-Frontend')]",
+                "[parameters('networkSecurityGroupName-Frontend')]",
+                "[parameters('virtualNetworkName')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -169,35 +115,26 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId(parameters('resGroupName'),'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName-Frontend'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName-Frontend'))]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId(parameters('resGroupName'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName-Frontend'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName-Frontend'))]"
                 }
-            }
-        },
-        {
-            "name": "[parameters('publicIpAddressName-Frontend')]",
-            "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2017-08-01",
-            "location": "[parameters('location')]",
-            "properties": {
-                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
-            },
-            "sku": {
-                "name": "[parameters('publicIpAddressSku')]"
             }
         },
         {
             "name": "[parameters('networkInterfaceName-Backend')]",
             "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2016-09-01",
-            "location": "[parameters('location')]",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "comments": "This will be your Secondary NIC",
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName-Backend'))]"
+                "[parameters('publicIpAddressName-Backend')]",
+                "[parameters('networkSecurityGroupName-Backend')]",
+                "[parameters('virtualNetworkName')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -209,33 +146,110 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId(parameters('resGroupName'),'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName-Backend'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName-Backend'))]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId(parameters('resGroupName'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName-Backend'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName-Backend'))]"
                 }
+            }
+        },
+        {
+            "name": "[parameters('publicIpAddressName-Frontend')]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "comments": "Public IP for your Primary NIC",
+            "properties": {
+                "publicIpAllocationMethod": "Dynamic"
             }
         },
         {
             "name": "[parameters('publicIpAddressName-Backend')]",
             "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2017-08-01",
-            "location": "[parameters('location')]",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "comments": "Public IP for your Secondary NIC",
             "properties": {
-                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
-            },
-            "sku": {
-                "name": "[parameters('publicIpAddressSku')]"
+                "publicIpAllocationMethod": "Dynamic"
+            }
+        },
+        {
+            "name": "[parameters('networkSecurityGroupName-Frontend')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "comments": "Network Security Group (NSG) for your Primary NIC",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-rdp",
+                        "properties": {
+                            "priority": 1000,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "3389",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "chef-bootstrap",
+                        "properties": {
+                            "priority": 1001,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "5985-5986",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('networkSecurityGroupName-Backend')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "comments": "Network Security Group (NSG) for your Secondary NIC",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-rdp",
+                        "properties": {
+                            "priority": 1000,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "3389",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "chef-bootstrap",
+                        "properties": {
+                            "priority": 1001,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "Tcp",
+                            "destinationPortRange": "5985-5986",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    }
+                ]
             }
         }
     ],
-    "outputs": {
-        "adminUsername": {
-            "type": "string",
-            "value": "[parameters('adminUsername')]"
-        }
-    }
-}
+    "outputs": {}
+} 
