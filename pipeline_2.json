@@ -88,31 +88,14 @@
         "subnet1Ref": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName-Frontend'))]",
         "subnet2Ref": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName-Backend'))]"
     },
-    "resources": [
-        {
-          "type": "Microsoft.Compute/images",
-          "apiVersion": "2016-04-30-preview",
-          "name": "[parameters('vmCustomImageName')]",
-          "location": "[resourceGroup().location]",
-          "properties": {
-            "storageProfile": {
-              "osDisk": {
-                "osType": "[parameters('osType')]",
-                "osState": "Generalized",
-                "blobUri": "[parameters('osDiskVhdUri')]",
-                "storageAccountType": "Standard_LRS"
-              }
-            }
-          }
-        },
+    "resources": [        
         {
             "name": "[parameters('virtualMachineName-Frontend')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Frontend'))]",
-                "[parameters('vmCustomImageName')]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Frontend'))]"
             ],
             "properties": {
                 "osProfile": {
@@ -124,9 +107,15 @@
                     }
                 },
                 "storageProfile": {
-                  "imageReference": {
-                    "id": "[resourceId('Microsoft.Compute/images', parameters('vmCustomImageName'))]"
-                  }
+                    "imageReference": {
+                        "id": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/images/wiproimg-image-20180302135527"
+                    },
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    }
                 },
                 "hardwareProfile": {
                     "vmSize": "[parameters('virtualMachineSize')]"
@@ -146,8 +135,7 @@
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Backend'))]",
-                "[parameters('vmCustomImageName')]"
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName-Backend'))]"
             ],
             "properties": {
                 "osProfile": {
@@ -162,9 +150,15 @@
                     "vmSize": "[parameters('virtualMachineSize')]"
                 },
                "storageProfile": {
-                  "imageReference": {
-                    "id": "[resourceId('Microsoft.Compute/images', parameters('vmCustomImageName'))]"
-                  }
+                    "imageReference": {
+                        "id": "/subscriptions/258eb299-f2a9-438b-bb4c-12a72814a4d1/resourceGroups/lbgcheflab/providers/Microsoft.Compute/images/wiproimg-image-20180302135527"
+                    },
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    }
                 },
                 "networkProfile": {
                     "networkInterfaces": [
