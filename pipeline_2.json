@@ -50,7 +50,7 @@
         "resGroupName": {
             "type": "string"
         },
-        "deploymentName": {
+        "depName": {
             "type": "string"
         },
         "publicIpAddressType": {
