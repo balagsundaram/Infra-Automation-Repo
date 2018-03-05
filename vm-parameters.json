@@ -15,10 +15,10 @@
                                                   "value":  "Basic"
                                               },
                        "virtualMachineName-Frontend":  {
-                                                  "value":  "lbgsecondwavedemo-Ft"
+                                                  "value":  "lbgwavedemo-Ft"
                                               },
                         "virtualMachineName-Backend":  {
-                            "value":  "lbgsecondwavedemo-Bk"
+                            "value":  "lbgwavedemo-Bk"
                         },
                        "adminUsername":  {
                                              "value":  "lbgadmin"
