@@ -27,17 +27,17 @@
                                            "value":  "lbgARMdemo-Backend"
                                        },
                        "publicIpAddressName-Frontend":  {
-                                                   "value":  "lbgsecondwavedemo-Frontend"
+                                                   "value":  "lbgchefdemo-Frontend"
                                                },
                         "publicIpAddressName-Backend":  {
-                                                "value":  "sampletestdemo-Backend"
+                                                "value":  "lbgchefdemo-Backend"
                         },
 
                        "resGroupName":  {
-                                            "value":  "lbgsecondwavedemo"
+                                            "value":  "lbgchefdemo"
                                         },
                         "depName":  {
-                                            "value":  "lbgsecondwavedemo"
+                                            "value":  "lbgchefdemo"
                                         }
                    }
 }

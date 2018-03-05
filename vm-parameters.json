@@ -15,10 +15,10 @@
                                                   "value":  "Basic"
                                               },
                        "virtualMachineName-Frontend":  {
-                                                  "value":  "lbgwavedemo-Ft"
+                                                  "value":  "lbgchefdemo-Ft"
                                               },
                         "virtualMachineName-Backend":  {
-                            "value":  "lbgwavedemo-Bk"
+                            "value":  "lbgchefdemo-Bk"
                         },
                        "adminUsername":  {
                                              "value":  "lbgadmin"
@@ -46,7 +46,7 @@
                                           "value":  "lbgARMdemo-Frontend"
                                       },
                        "publicIpAddressName-Frontend":  {
-                                                   "value":  "lbgsecondwavedemo-Frontend"
+                                                   "value":  "lbgchefdemo-Frontend"
                                                },
                         "networkInterfaceName-Backend":  {
                             "value":  "lbgARMdemoNIC-Backend"
@@ -58,14 +58,14 @@
                                           "value":  "lbgARMdemo-Backend"
                                       },
                        "publicIpAddressName-Backend":  {
-                                                   "value":  "lbgsecondwavedemo-Backend"
+                                                   "value":  "lbgchefdemo-Backend"
                                                },
 
                        "resGroupName":  {
-                                            "value":  "lbgsecondwavedemo"
+                                            "value":  "lbgchefdemo"
                                         },
                         "depName":  {
-                                            "value":  "lbgsecondwavedemo"
+                                            "value":  "lbgchefdemo"
                                         },
                         "osType": {
                                              "value":  "Windows"
