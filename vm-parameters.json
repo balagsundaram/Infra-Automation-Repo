@@ -46,7 +46,7 @@
                                           "value":  "lbgARMdemo-Frontend"
                                       },
                        "publicIpAddressName-Frontend":  {
-                                                   "value":  "sampletestdemo-Frontend"
+                                                   "value":  "lbgsecondwavedemo-Frontend"
                                                },
                         "networkInterfaceName-Backend":  {
                             "value":  "lbgARMdemoNIC-Backend"
@@ -58,14 +58,14 @@
                                           "value":  "lbgARMdemo-Backend"
                                       },
                        "publicIpAddressName-Backend":  {
-                                                   "value":  "sampletestdemo-Backend"
+                                                   "value":  "lbgsecondwavedemo-Backend"
                                                },
 
                        "resGroupName":  {
-                                            "value":  "sampletestdemo"
+                                            "value":  "lbgsecondwavedemo"
                                         },
                         "depName":  {
-                                            "value":  "sampletestdemo"
+                                            "value":  "lbgsecondwavedemo"
                                         },
                         "osType": {
                                              "value":  "Windows"
